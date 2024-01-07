@@ -1,7 +1,5 @@
 # RestDoc API 문서자동화
 
-![api-docs](./pic/api-docs.png)
-
 ## build.gradle 설정
 ```gralde
 plugins {
