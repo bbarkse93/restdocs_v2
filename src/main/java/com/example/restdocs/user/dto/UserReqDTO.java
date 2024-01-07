@@ -16,7 +16,7 @@ public class UserReqDTO {
         @Size(min = 4, max = 20)
         @NotEmpty
         private String password;
-        @Size(min = 10, max = 100)
+        @Size(min = 15, max = 100)
         @NotEmpty
         private String email;
 
