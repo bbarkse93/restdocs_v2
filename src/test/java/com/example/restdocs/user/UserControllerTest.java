@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @AutoConfigureMockMvc
 @SpringBootTest // 테스트할 때 모든걸 메모리에 띄울 때
@@ -40,7 +41,21 @@ public class UserControllerTest {
         System.out.println(responseBody);
 
         // then
-
+        // 잘못된 검증
+//        ra
+//                .andExpect(MockMvcResultMatchers.status().isCreated())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("ssar"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.password").value("1234"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("ssar@nate.com"));
+        // 제대로 된 검증
+        ra
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.username").value("cos"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.password").value("1234"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.email").value("cos@nate.com"));
     }
 
     @Test
