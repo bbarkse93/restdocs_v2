@@ -4,12 +4,9 @@ import com.example.restdocs.MyWithRestDoc;
 import com.example.restdocs.user.dto.UserReqDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -63,7 +60,29 @@ public class UserControllerTest extends MyWithRestDoc {
     }
 
     @Test
-    public void userInfo_test() {
+    public void userInfo_test() throws Exception {
+        // given
+        int id = 1;
 
+        // when
+        ResultActions ra = mockMvc.perform(
+                MockMvcRequestBuilders
+                        .get("/users/"+id)
+
+        );
+
+        String responseBody = ra.andReturn().getResponse().getContentAsString();
+        System.out.println(responseBody);
+        //then
+        ra
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.username").value("ssar"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.password").value("1234"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.email").value("ssar@nate.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+                .andDo(MockMvcResultHandlers.print())
+                .andDo(document);
     }
 }

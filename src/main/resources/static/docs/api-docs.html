@@ -448,6 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_회원">회원</a>
 <ul class="sectlevel2">
 <li><a href="#_1_회원가입">1. 회원가입</a></li>
+<li><a href="#_2_회원조회">2. 회원조회</a></li>
 </ul>
 </li>
 </ul>
@@ -498,13 +499,46 @@ Content-Length: 163
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_2_회원조회">2. 회원조회</h3>
+<div class="sect4">
+<h5 id="_request_example_2">Request Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /users/1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_example_2">Response Example</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 165
+
+{
+  "success" : true,
+  "response" : {
+    "id" : 1,
+    "username" : "ssar",
+    "password" : "1234",
+    "email" : "ssar@nate.com"
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2024-01-08 03:42:44 +0900
+Last updated 2024-01-08 03:57:21 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

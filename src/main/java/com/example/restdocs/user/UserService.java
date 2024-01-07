@@ -13,4 +13,9 @@ public class UserService {
     public User 회원가입(UserReqDTO.JoinDTO DTO) {
         return userRepository.save(DTO.toEntity());
     }
+
+    public User 회원조회(Integer id) {
+        User user = userRepository.findById(id).get();
+        return user;
+    }
 }
