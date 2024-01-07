@@ -1,23 +1,24 @@
 package com.example.restdocs.user;
 
+import com.example.restdocs.MyWithRestDoc;
 import com.example.restdocs.user.dto.UserReqDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@AutoConfigureMockMvc
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 @SpringBootTest // 테스트할 때 모든걸 메모리에 띄울 때
-public class UserControllerTest {
+public class UserControllerTest extends MyWithRestDoc {
 
-    @Autowired
-    private MockMvc mvc;
 
     @Test
     public void join_test() throws Exception {
@@ -30,7 +31,7 @@ public class UserControllerTest {
         String requestBody = om.writeValueAsString(requestDTO);
 
         // when
-        ResultActions ra = mvc.perform(
+        ResultActions ra = mockMvc.perform(
                 MockMvcRequestBuilders
                         .post("/join")
                         .content(requestBody)
@@ -55,7 +56,10 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.username").value("cos"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.password").value("1234"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.email").value("cos@nate.com"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.response.email").value("cos@nate.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty())
+                .andDo(MockMvcResultHandlers.print())
+                .andDo(document);
     }
 
     @Test
