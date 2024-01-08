@@ -10,6 +10,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class UserController {
@@ -40,6 +42,12 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<?> userInfo(@PathVariable Integer id) {
        User user = userService.회원조회(id);
+        return ResponseEntity.ok().body(ApiUtil.success(user));
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<?> userAll() {
+        List<User> user = userService.회원전체조회();
         return ResponseEntity.ok().body(ApiUtil.success(user));
     }
 }
